@@ -1,0 +1,49 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    height: 100px;
+    width: 100px;
+    margin: 30px;
+    font-size: 30px;
+}
+
+.row1 {
+    grid-row: 1;
+}
+
+.row2 {
+    grid-row: 2;
+}
+
+.row3 {
+    grid-row: 3;
+}
+
+#button-container {
+    display: grid;
+    width: 700px;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+}
+
+#main-container {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    height: 800px;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+#results-container {
+    width: inherit;
+    display: block;
+    grid-row: 1;
+    margin-bottom: 30px;
+    border: solid black 5px;
+    padding-left: 50px;
+}
