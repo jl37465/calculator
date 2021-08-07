@@ -30,9 +30,12 @@ let finalArray = [];
 
 // shouldClear is for the display showing 0 at first, becomes false after first number is input and does not become true until clear is input.
 
-// when alreadyCalculated is true, program will do a midway calculation, i.e. before equals is input. Will trigger after the second operator is input.
+// when alreadyCalculated is true, program will do a midway calculation, i.e. after equals is input, inputting an operator and a number then pressing equals again will work.
+
+// secondStep dictates whether there are one or two operators. If true, pressing a second operator (1 + 2 +) will return the result of the first pair before continuing.
 let shouldClear = true;
 let alreadyCalculated = false;
+let secondStep = false;
 
 function updateResults(content) {
     const resultsDiv = document.querySelector("#results-container");
@@ -57,11 +60,12 @@ function clearResults() {
 
     oldResults.textContent = 0;
     displayArray = [];
+    finalArray.splice(0);
     calculationArray = [];
-    finalArray = [];
     console.log("Calculator Cleared!")
-    shouldCLear = true;
-    
+    shouldClear = true;
+    alreadyCalculated = false;
+    secondStep = false;
 }
 
 function add(a, b) {
@@ -69,15 +73,15 @@ function add(a, b) {
 }
 
 function subtract(a, b) {
-    return a - b;
+    return Number(a) - Number(b);
 }
 
 function multiply(a, b) {
-    return a * b;
+    return Number(a) * Number(b);
 }
 
 function divide(a, b) {
-    return a / b;
+    return Number(a) / Number(b);
 }
 
 function operate(num1, num2, operator) {
@@ -87,8 +91,11 @@ function operate(num1, num2, operator) {
         return subtract(num1, num2);
     } else if (operator === "multiply") {
         return multiply(num1, num2);
-    } else if (operator === "divide") {
+    } else if (operator === "divide" && "num2" !== 0) {
         return divide(num1, num2);
+    } else if (operator === "divide" && "num2" === 0) {
+        alert("ERROR: PLEASE DON'T DO THAT.");
+        clearResults();
     } else {
         console.log("ERROR");
         clearResults();
@@ -102,9 +109,7 @@ function finalCalculate() {
     let finalResult = operate(firstNumber, secondNumber, operator);
     displayArray = [];
 
-    finalArray[0] = finalResult;
-    finalArray[1] = null;
-    finalArray.splice(2);
+    finalArray = [];
     updateResults(finalResult);
 }
 
@@ -168,46 +173,130 @@ function buttonEventListeners() {
     });
 
     buttonPlus.addEventListener("click", () => {
-        
-        if (!alreadyCalculated) {
-            collateNumbers();
-            finalArray[1] = ("plus");
-            alreadyCalculated = true;
-        }  else {
-            finalArray[1] = ("plus");
+        if(finalArray[1] && !alreadyCalculated) {
+            alert("ERROR: INVALID INPUT.");
+            clearResults();
+        } else {
+            if(!secondStep) {
+                secondStep = true;
+            } else {
+                collateNumbers();
+                finalCalculate();
+            }
+            if (!alreadyCalculated) {
+                collateNumbers();
+                finalArray[1] = ("plus");
+                alreadyCalculated = true;
+            }  else {
+                finalArray[0] = Number(displayArray[0]);
+                finalArray[1] = ("plus");
+            }
+            
+            updateResults(" + ");
+            console.log(calculationArray);
         }
-        
-        updateResults(" + ");
-        console.log(calculationArray);
+            
     });
     buttonMinus.addEventListener("click", () => {
-        finalArray[1] = ("minus");
-        updateResults(" - ");
-        console.log(calculationArray);
+        if(finalArray[1] && !alreadyCalculated) {
+            alert("ERROR: INVALID INPUT.");
+            clearResults();
+        } else {
+            if(!secondStep) {
+                secondStep = true;
+            } else {
+                collateNumbers();
+                finalCalculate();
+            }
+
+            if (!alreadyCalculated) {
+                collateNumbers();
+                finalArray[1] = ("minus");
+                alreadyCalculated = true;
+            }  else {
+                finalArray[0] = Number(displayArray[0]);
+                finalArray[1] = ("minus");
+            }
+            
+            updateResults(" - ");
+            console.log(calculationArray);
+        }
     });
     buttonMultiply.addEventListener("click", () => {
-        finalArray[1] = ("multiply");
-        updateResults(" * ");
-        console.log(calculationArray);
+        if(finalArray[1] && !alreadyCalculated) {
+            alert("ERROR: INVALID INPUT.");
+            clearResults();
+        } else {
+            if(!secondStep) {
+                secondStep = true;
+            } else {
+                collateNumbers();
+                finalCalculate();
+            }
+
+            if (!alreadyCalculated) {
+                collateNumbers();
+                finalArray[1] = ("multiply");
+                alreadyCalculated = true;
+            }  else {
+                finalArray[0] = Number(displayArray[0]);
+                finalArray[1] = ("multiply");
+            }
+            
+            updateResults(" * ");
+            console.log(calculationArray);
+        }
     });
     buttonDivide.addEventListener("click", () => {
-        finalArray[1] = ("divide");
-        updateResults(" ÷ ");
-        console.log(calculationArray);
+        if(finalArray[1] && !alreadyCalculated) {
+            alert("ERROR: INVALID INPUT.");
+            clearResults();
+        } else {
+            if(!secondStep) {
+                secondStep = true;
+            } else {
+                collateNumbers();
+                finalCalculate();
+            }
+
+            if (!alreadyCalculated) {
+                collateNumbers();
+                finalArray[1] = ("divide");
+                alreadyCalculated = true;
+            }  else {
+                finalArray[0] = Number(displayArray[0]);
+                finalArray[1] = ("divide");
+            }
+
+            updateResults(" ÷ ");
+            console.log(calculationArray);
+        }
     });
 
     buttonCE.addEventListener("click", () => {
         clearResults();
-    })
+    });
+
     buttonEquals.addEventListener("click", () => {
-        collateNumbers();
-        finalCalculate();
-    })
+        if (!calculationArray.length && !finalArray[0]) {
+            clearResults();
+        };
+        if (finalArray.includes("plus") || finalArray.includes("minus") || finalArray.includes("divide") || finalArray.includes("multiply")) {
+            collateNumbers();
+            finalCalculate();
+            alreadyCalculated = true;
+            secondStep = false;
+        }
+        
+    });
     
 }
 
 buttonEventListeners();
 
-// Adding WORKS!!! you can press equals then immediately add again and it works!
-// do that for all the other operations
-// then figure out how to do multiple operations at the same time then press enter while still showing the halfway equation as solved.
+
+
+// Main functionality finished!
+
+// Make it pretty!
+// Add comments and stuff
