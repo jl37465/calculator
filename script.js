@@ -296,7 +296,6 @@ buttonEventListeners();
 
 
 
-// Main functionality finished!
 
-// Make it pretty!
+
 // Add comments and stuff

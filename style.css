@@ -1,49 +1,115 @@
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    background-image: linear-gradient(90deg, rgb(243, 179, 239), rgb(187, 233, 240));
 }
 
 button {
-    height: 100px;
+    height: 60px;
     width: 100px;
-    margin: 30px;
+    margin: 5px;
     font-size: 30px;
+    border-radius: 10px;
+}
+
+footer {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+    right: 10px;
+}
+
+h1 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+    direction: ltr;
+    font-size: 40px;
+}
+
+h2 {
+    display: inline;
+    font-size: 30px;
+    line-height: 0;
+    font-family: "Asap", sans-serif;
 }
 
 .row1 {
     grid-row: 1;
+    margin-top: 80px;
 }
 
 .row2 {
     grid-row: 2;
+    margin-top: 80px;
 }
 
 .row3 {
     grid-row: 3;
+    margin-top: 80px;
+}
+
+.row4 {
+    margin-top: 80px;
 }
 
 #button-container {
     display: grid;
-    width: 700px;
-    grid-template-rows: repeat(3, 1fr);
-    grid-template-columns: repeat(4, 1fr);
+    width: 500px;
+    grid-template-rows: repeat(3, 130px);
+    grid-template-columns: repeat(4, 130px);
 }
+
+#github-icon {
+    display: inline;
+    width: 30px;
+    padding-left: 15px;
+}
+
+@keyframes github-animation {
+    from {
+        filter: invert(0%)
+    }
+    to {
+        filter: invert(100%)
+    }
+}
+
+#github-icon:hover {
+    animation-name: github-animation;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+
 
 #main-container {
     margin-top: 50px;
     display: flex;
     flex-direction: column;
-    width: 1000px;
+    width: 600px;
     height: 800px;
     justify-content: center;
     align-items: center;
     align-self: center;
+    background-image: linear-gradient(-45deg, rgb(243, 179, 239), rgb(187, 233, 240));
+    border-radius: 50px;
+
+    -moz-box-shadow:    0px 0px 20px 15px rgb(122, 122, 122);
+    -webkit-box-shadow: 0px 0px 20px 15px rgb(122, 122, 122);
+    box-shadow:         0px 0px 20px 15px rgb(122, 122, 122);
 }
 
 #overflow-container {
-    width: 600px;
+    width: 400px;
+    padding-right: 750px;
     overflow: hidden;
-    white-space: nowrap;
+    white-space: normal;
+    text-overflow: clip;
 }
 
 #results {
@@ -53,12 +119,21 @@ button {
 }
 
 #results-container {
-    width: 700px;
+    width: 500px;
     display: flex;
     grid-row: 1;
     margin-bottom: 30px;
-    border: solid black 5px;
     padding-left: 0px;
-    overflow: hidden;
     justify-content: center;
+    overflow: hidden;
+    white-space: normal;
+    background-color: #FFE6E6;
+    border-radius: 10px;
+
+    -moz-box-shadow:    inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #000000;
+    box-shadow:         inset 0 0 10px #000000;
 }
+
+/* Done core functionality and github animation!!
+Finally, add some button animations and last finishing touches */
